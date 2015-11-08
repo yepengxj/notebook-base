@@ -55,12 +55,12 @@ RUN conda install --yes \
 
 # Create jovyan user with UID=1000 and in the 'users' group
 # Grant ownership over the conda dir and home dir, but stick the group as root.
-#RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
-#    mkdir /home/$NB_USER/work && \
-#    mkdir /home/$NB_USER/.jupyter && \
-#    mkdir /home/$NB_USER/.local && \
-#    chown -R $NB_USER:users $CONDA_DIR && \
-#    chown -R $NB_USER:users /home/$NB_USER
+RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
+    mkdir /home/$NB_USER/work && \
+    mkdir /home/$NB_USER/.jupyter && \
+    mkdir /home/$NB_USER/.local && \
+    chown -R $NB_USER:users $CONDA_DIR && \
+    chown -R $NB_USER:users /home/$NB_USER
 
 # Configure container startup
 EXPOSE 8888
@@ -71,4 +71,4 @@ CMD ["env PATH=$PATH jupyter notebook $*"]
 # Add local files as late as possible to avoid cache busting
 COPY start-notebook.sh /usr/local/bin/
 COPY jupyter_notebook_config.py /home/$NB_USER/.jupyter/
-RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
+#RUN chown -R $NB_USER:users /home/$NB_USER/.jupyter
