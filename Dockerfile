@@ -66,7 +66,8 @@ RUN useradd -m -s /bin/bash -N -u $NB_UID $NB_USER && \
 EXPOSE 8888
 WORKDIR /home/$NB_USER/work
 ENTRYPOINT ["tini", "--"]
-CMD ["env PATH=$PATH jupyter notebook $*"]
+#CMD ["env PATH=$PATH jupyter notebook $*"]
+CMD ["start-notebook.sh"]
 
 # Add local files as late as possible to avoid cache busting
 COPY start-notebook.sh /usr/local/bin/
